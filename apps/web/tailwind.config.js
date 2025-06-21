@@ -2,9 +2,9 @@
 module.exports = {
     darkMode: ["class"],
     content: [
-    "./app/**/*.{ts,tsx}", // correct path for your setup
-    "./pages/**/*.{ts,tsx}", // optional if you later add pages
-    "./components/**/*.{ts,tsx}" // optional if you add components folder
+    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
+    "./src/components/**/*.{ts,tsx}",
   ],
   theme: {
   	extend: {
