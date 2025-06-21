@@ -12,7 +12,12 @@ export function Navigation() {
         <Link href="/explore" className="text-sm font-medium hover:underline">
           Explore Studios
         </Link>
-        <Button variant="outline">Sign In</Button> {/* Placeholder for now */}
+        <Link href="/login">
+          <Button>Sign In</Button>
+        </Link>
+        <Link href="/register">
+          <Button variant="secondary">Sign Up</Button>
+        </Link>
       </div>
     </nav>
   );
