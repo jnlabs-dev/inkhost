@@ -1,34 +1,20 @@
 "use client";
 
-import { useEffect } from "react";
-import L from "leaflet";
+import { MapContainer, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-type InteractiveMapProps = {
-  center?: [number, number];
-  zoom?: number;
-};
-
-export function InteractiveMap({
-  center = [52.2297, 21.0122], // Default to Warsaw
-  zoom = 12,
-}: InteractiveMapProps) {
-  useEffect(() => {
-    const map = L.map("map").setView(center, zoom);
-
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-    }).addTo(map);
-
-    return () => {
-      map.remove(); // Cleanup on unmount
-    };
-  }, [center, zoom]);
-
+export function InteractiveMap() {
   return (
-    <div
-      id="map"
-      style={{ width: "100%", height: "500px", borderRadius: "1rem" }}
-    />
+    <MapContainer
+      center={[52.2297, 21.0122]} // Example: Warsaw
+      zoom={13}
+      scrollWheelZoom={false}
+      className="w-full h-[500px]"
+    >
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+      />
+    </MapContainer>
   );
 }

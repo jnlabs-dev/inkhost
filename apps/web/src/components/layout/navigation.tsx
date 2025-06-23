@@ -9,7 +9,7 @@ export function Navigation() {
         InkHost
       </Link>
       <div className="flex items-center gap-4">
-        <Link href="/explore" className="text-sm font-medium hover:underline">
+        <Link href="/studios" className="text-sm font-medium hover:underline">
           Explore Studios
         </Link>
         <Link href="/login">
