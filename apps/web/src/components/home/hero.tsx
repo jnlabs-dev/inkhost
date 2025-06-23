@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <section className="w-ful md:py-4 lg:py-10 text-center">
+    <section className="w-ful px-6 md:py-4 lg:py-10 text-center">
       <div className="max-w-4xl mx-auto space-y-5">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
           InkHost: Where Artists Guest, Studios Host <br className="hidden md:inline-block" /> and Fans Stay in the Loop

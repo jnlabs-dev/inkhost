@@ -2,13 +2,15 @@
 import { ReactNode } from "react";
 import { Navigation } from "@/components/layout/navigation";
 import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
-export function Shell({ children }: { children: ReactNode }) {
+
+export function Shell({ children, className }: { children: ReactNode, className?: string }) {
   return (
     <div className="min-h-screen flex flex-col">
       <Navigation />
 
-      <main className="flex-1 px-6 py-8">
+      <main className={cn("flex-1", className)}>
         {children}
       </main>
 
