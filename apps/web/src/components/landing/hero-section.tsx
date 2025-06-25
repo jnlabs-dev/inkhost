@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 export function HeroSection() {
   return (
-    <section className="w-full px-6 md:py-4 lg:py-10 text-center">
+    <section className="w-full px-6 py-6 lg:py-10 text-center">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
           InkHost: Where Artists Guest, Studios Host & Clients Book Tattoos
