@@ -34,7 +34,7 @@ const FlowArrows = () => {
   )
 }
 
-export function JoinInkHostSection() {
+export function FlowOverviewSection() {
   return (
     <section className="w-full px-4 py-2">
       <div className="max-w-5xl mx-auto flex flex-col items-center md:flex-row md:items-center md:justify-between">
