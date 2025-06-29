@@ -1,7 +1,7 @@
 // apps/web/components/layout/shell.tsx
 import { ReactNode } from "react";
 import { Navigation } from "@/components/layout/navigation";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/components/ui/base/separator";
 import { cn } from "@/lib/utils";
 
 

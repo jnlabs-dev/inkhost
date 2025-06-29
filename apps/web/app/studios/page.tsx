@@ -1,7 +1,5 @@
 import { Shell } from "@/components/layout/shell";
-import { HeroSection } from "@/components/landing/hero-section";
-import { JoinInkHostSection } from "@/components/landing/join-inkhost-section";
-import { InteractiveMap } from "@/components/ui/interactive-map.client";
+import { InteractiveMap } from "@/components/ui/interactiveMap/interactiveMap.client";
 
 export default function ExploreStudiosPage() {
   return (

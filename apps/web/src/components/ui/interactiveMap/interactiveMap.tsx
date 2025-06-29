@@ -1,0 +1,20 @@
+"use client";
+
+import { MapContainer, TileLayer } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+export function InteractiveMap() {
+  return (
+    <MapContainer
+      center={[52.2297, 21.0122]} // Example: Warsaw
+      zoom={13}
+      scrollWheelZoom={false}
+      className="w-full h-[500px]"
+    >
+      <TileLayer
+        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+      />
+    </MapContainer>
+  );
+}
