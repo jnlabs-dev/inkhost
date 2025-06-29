@@ -21,7 +21,7 @@ const FlowCard = ({ imageSrc, label, focusedStateLabel, description }: FlowCardP
         <span className="hidden group-hover:inline-block">{focusedStateLabel}</span>
         <span className='hidden group-hover:block w-[110%] h-[1px] absolute left-[-5%] bottom-[1px] bg-gray-500' />
       </h3>
-      <p className="mt-2 text-muted-foreground">{description}</p>
+      <p className="md:mt-2 text-muted-foreground">{description}</p>
     </div>
   )
 }

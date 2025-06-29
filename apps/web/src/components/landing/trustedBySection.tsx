@@ -20,7 +20,7 @@ const TRUSTED_BY_LIST = [
 export const TrustedBySection = () => {
   return (
     <section className="py-4 md:py-8 text-center">
-      <h3 className="text-2xl font-thin text-muted-foreground tracking-wide mb-4">
+      <h3 className="text-xl md:text-2xl font-thin text-muted-foreground tracking-wide mb-4">
         Trusted by Top Tattoo Studios & Artists
       </h3>
       <div className="flex justify-center flex-wrap items-center gap-6 opacity-90">

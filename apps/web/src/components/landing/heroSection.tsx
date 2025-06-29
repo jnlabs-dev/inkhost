@@ -1,5 +1,6 @@
 "use client";
 
+import { Compass, Search } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/base/button";
 
@@ -18,10 +19,16 @@ export function HeroSection() {
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 mt-3">
           <Link href="/studios">
-            <Button size="lg" className="w-[240px] text-base">Explore Studios</Button>
+            <Button size="lg" className="w-[240px] text-base">
+              <Compass />
+              Explore Studios
+            </Button>
           </Link>
           <Link href="/artists?location=nearby">
-            <Button size="lg" className="w-[240px] text-base">Discover Artists</Button>
+            <Button size="lg" className="w-[240px] text-base">
+              <Search />
+              Discover Artists
+            </Button>
           </Link>
         </div>
       </div>
