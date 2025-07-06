@@ -1,9 +1,9 @@
-import { Shell } from "@/components/layout/shell";
-import { HeroSection } from "@/components/landing/heroSection";
-import { FlowOverviewSection } from "@/components/landing/flowOverviewSection";
-import { TrustedBySection } from "@/components/landing/trustedBySection";
-import { PlatformBenefitsSection } from "@/components/landing/platformBenefitsSection";
-import { GetStartedSection } from "@/components/landing/getStartedSection";
+import { Shell } from "@/components/layout/Shell";
+import { HeroSection } from "@/components/Landing/HeroSection";
+import { FlowOverviewSection } from "@/components/Landing/FlowOverviewSection";
+import { TrustedBySection } from "@/components/Landing/TrustedBySection";
+import { PlatformBenefitsSection } from "@/components/Landing/PlatformBenefitsSection";
+import { GetStartedSection } from "@/components/Landing/GetStartedSection";
 
 export default function LandingPage() {
   return (

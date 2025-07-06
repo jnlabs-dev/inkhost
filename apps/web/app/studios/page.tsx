@@ -1,5 +1,5 @@
-import { Shell } from "@/components/layout/shell";
-import { InteractiveMap } from "@/components/ui/interactiveMap/interactiveMap.client";
+import { Shell } from "@/components/layout/Shell";
+import { InteractiveMap } from "@/components/ui/InteractiveMap/InteractiveMap.client";
 
 export default function ExploreStudiosPage() {
   return (

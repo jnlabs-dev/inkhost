@@ -2,7 +2,7 @@
 
 import { Compass, Search } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/base/button";
+import { Button } from "@/components/ui/base/Button";
 
 export function HeroSection() {
   return (

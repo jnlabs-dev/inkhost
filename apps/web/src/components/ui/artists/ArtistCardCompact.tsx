@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Card, CardContent, CardTitle } from "@/components/ui/base/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/base/Card";
 
 type Artist = {
   id: string;

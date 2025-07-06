@@ -1,6 +1,6 @@
 'use client'
 
-import { InfiniteLogoStrip } from "@/components/ui/infiniteLogoStrip/InfiniteLogoStrip"
+import { InfiniteLogoStrip } from "@/components/ui/InfiniteLogoStrip/InfiniteLogoStrip"
 
 
 const TRUSTED_BY_LIST = [

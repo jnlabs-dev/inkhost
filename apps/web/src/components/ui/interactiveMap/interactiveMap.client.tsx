@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-const InteractiveMap = dynamic(() => import("./interactiveMap").then(mod => mod.InteractiveMap), {
+const InteractiveMap = dynamic(() => import("./InteractiveMap").then(mod => mod.InteractiveMap), {
   ssr: false,
 });
 

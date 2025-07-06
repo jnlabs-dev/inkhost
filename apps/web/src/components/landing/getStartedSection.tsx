@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { Button } from "@/components/ui/base/button"
+import { Button } from "@/components/ui/base/Button"
 import { HousePlus, PenTool, CircleUserRound } from "lucide-react"
 
 export function GetStartedSection() {

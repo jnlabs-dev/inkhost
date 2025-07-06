@@ -1,6 +1,6 @@
 // apps/web/components/layout/navigation.tsx
 import Link from "next/link";
-import { Button } from "@/components/ui/base/button";
+import { Button } from "@/components/ui/base/Button";
 
 export function Navigation() {
   return (
