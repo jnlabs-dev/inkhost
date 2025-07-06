@@ -1,8 +1,7 @@
 import { RegisterForm } from "@/components/Register/RegisterForm"
 import { UserRole, USER_ROLES } from "@/constants/roles"
 
-
-export default function RegisterPage({ params }: { params: { type: UserRole } }) {
+export default async function RegisterPage({ params }: { params: { type: UserRole } }) {
   return <RegisterForm initialType={params.type} />
 }
 
