@@ -1,8 +1,20 @@
 import { RegisterForm } from "@/components/Register/RegisterForm"
 import { UserRole, USER_ROLES } from "@/constants/roles"
 
-export default async function RegisterPage({ params }: { params: { type: UserRole } }) {
-  return <RegisterForm initialType={params.type} />
+type PageParams = {
+  type: UserRole;
+}
+
+export default async function RegisterPage({ params }: { params: Promise<PageParams> }) {
+  const resolvedParams = await params;
+  return <RegisterForm initialType={resolvedParams.type} />
+}
+
+export async function generateMetadata({ params }: { params: Promise<PageParams> }) {
+  const resolvedParams = await params;
+  return {
+    title: `Register as ${resolvedParams.type}`,
+  }
 }
 
 export function generateStaticParams() {
