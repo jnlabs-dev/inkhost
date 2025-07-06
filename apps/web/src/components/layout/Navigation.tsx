@@ -1,6 +1,7 @@
-// apps/web/components/layout/navigation.tsx
+
 import Link from "next/link";
 import { Button } from "@/components/ui/base/Button";
+import { USER_ROLES } from "@/constants/roles"
 
 export function Navigation() {
   return (
@@ -15,7 +16,7 @@ export function Navigation() {
         <Link href="/login">
           <Button>Sign In</Button>
         </Link>
-        <Link href="/register">
+        <Link href={`/register/${USER_ROLES.ARTIST}`}>
           <Button variant="secondary">Sign Up</Button>
         </Link>
       </div>
