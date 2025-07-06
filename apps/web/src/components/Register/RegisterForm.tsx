@@ -18,7 +18,7 @@ export function RegisterForm({ initialType }: RegisterFormProps) {
   }, [role])
 
   return (
-    <div className="max-w-xl mx-auto py-10">
+    <div className="max-w-xl mx-auto p-10">
       <h1 className="text-2xl font-semibold text-center mb-6">Create your InkHost account</h1>
 
       <Tabs value={role} onValueChange={(v) => setRole(v as typeof role)} className="w-full">

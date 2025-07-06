@@ -3,8 +3,8 @@ import { InteractiveMap } from "@/components/ui/InteractiveMap/InteractiveMap.cl
 
 export default function ExploreStudiosPage() {
   return (
-    <Shell>
-      <InteractiveMap />
+    <Shell className="flex">
+      <InteractiveMap className="w-full" />
     </Shell>
   );
 }

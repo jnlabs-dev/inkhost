@@ -1,24 +1,31 @@
+'use client'
 
 import Link from "next/link";
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/base/Button";
 import { USER_ROLES } from "@/constants/roles"
 
 export function Navigation() {
+  const pathname = usePathname()
+  const isOnRegisterPage = pathname?.startsWith("/register");
+  const isOnLoginPage = pathname?.startsWith("/login");
+  const isOnLandingPage = pathname === '/';
+  const isLoggedIn = false;
   return (
     <nav className="flex items-center justify-between px-6 py-4 border-b">
       <Link href="/" className="text-xl font-bold">
         InkHost
       </Link>
       <div className="flex items-center gap-4">
-        <Link href="/studios" className="text-sm font-medium hover:underline">
+        {isOnLandingPage ? (<Link href="/studios" className="text-sm font-medium hover:underline">
           Explore Studios
-        </Link>
-        <Link href="/login">
+        </Link>) : null}
+        {!isOnLoginPage && !isLoggedIn ? (<Link href="/login">
           <Button>Sign In</Button>
-        </Link>
-        <Link href={`/register/${USER_ROLES.ARTIST}`}>
+        </Link>) : null}
+        {!isOnRegisterPage && !isLoggedIn ? (<Link href={`/register/${USER_ROLES.ARTIST}`}>
           <Button variant="secondary">Sign Up</Button>
-        </Link>
+        </Link>) : null}
       </div>
     </nav>
   );

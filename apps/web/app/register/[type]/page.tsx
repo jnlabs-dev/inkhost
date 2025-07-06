@@ -1,3 +1,4 @@
+import { Shell } from "@/components/layout/Shell"
 import { RegisterForm } from "@/components/Register/RegisterForm"
 import { UserRole, USER_ROLES } from "@/constants/roles"
 
@@ -7,7 +8,9 @@ type PageParams = {
 
 export default async function RegisterPage({ params }: { params: Promise<PageParams> }) {
   const resolvedParams = await params;
-  return <RegisterForm initialType={resolvedParams.type} />
+  return <Shell>
+    <RegisterForm initialType={resolvedParams.type} />
+  </Shell>
 }
 
 export async function generateMetadata({ params }: { params: Promise<PageParams> }) {
