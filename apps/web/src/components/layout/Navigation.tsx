@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/base/Button";
-import { USER_ROLES } from "@/constants/roles"
+import { ARTIST_ROLE } from "@/constants/roles"
 
 export function Navigation() {
   const pathname = usePathname()
@@ -23,7 +23,7 @@ export function Navigation() {
         {!isOnLoginPage && !isLoggedIn ? (<Link href="/login">
           <Button>Sign In</Button>
         </Link>) : null}
-        {!isOnRegisterPage && !isLoggedIn ? (<Link href={`/register/${USER_ROLES.ARTIST}`}>
+        {!isOnRegisterPage && !isLoggedIn ? (<Link href={`/register/${ARTIST_ROLE}`}>
           <Button variant="secondary">Sign Up</Button>
         </Link>) : null}
       </div>

@@ -2,8 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/base/Button"
-import { USER_ROLES } from "@/constants/roles"
-import { HousePlus, PenTool, CircleUserRound } from "lucide-react"
+import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from "@/constants/roles"
 
 export function GetStartedSection() {
   return (
@@ -16,21 +15,21 @@ export function GetStartedSection() {
           Sign up today to discover, host, or get tattooed — wherever you are.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <Link href={`/register/${USER_ROLES.STUDIO}`}>
+          <Link href={`/register/${STUDIO_ROLE}`}>
             <Button size="lg" variant="default">
-              <HousePlus className="size-4" />
+              <USER_ROLE_ICON.STUDIO className="size-4" />
               I’m a Studio
             </Button>
           </Link>
-          <Link href={`/register/${USER_ROLES.ARTIST}`}>
+          <Link href={`/register/${ARTIST_ROLE}`}>
             <Button size="lg" variant="default">
-              <PenTool className="size-4" />
+              <USER_ROLE_ICON.ARTIST className="size-4" />
               I’m an Artist
             </Button>
           </Link>
-          <Link href={`/register/${USER_ROLES.CLIENT}`}>
+          <Link href={`/register/${CLIENT_ROLE}`}>
             <Button size="lg" variant="default">
-              <CircleUserRound className="size-4" />
+              <USER_ROLE_ICON.CLIENT className="size-4" />
               I’m a Client
             </Button>
           </Link>

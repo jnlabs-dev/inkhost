@@ -1,11 +1,11 @@
 export {}
 
-export type Roles = 'studio' | 'artist' | 'client' | 'admin'
+export type Role = 'STUDIO' | 'ARTIST' | 'CLIENT' | 'ADMIN'
 
 declare global {
   interface CustomJwtSessionClaims {
     metadata: {
-      role?: Roles
+      role?: Role
       onboardingComplete?: boolean
     }
   }

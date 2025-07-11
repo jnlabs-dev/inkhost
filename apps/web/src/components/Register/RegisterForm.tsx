@@ -2,14 +2,15 @@
 
 import { useEffect, useState } from "react"
 import { SignUpButton } from "@clerk/nextjs"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/base/Tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/base/Tabs"
 import { Button } from "@/components/ui/base/Button"
-import { UserRole, USER_ROLES } from "@/constants/roles"
+import { Role } from '@/types/globals'
+import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from "@/constants/roles"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 
 type RegisterFormProps = {
-  initialType: UserRole
+  initialType: Role
 }
 
 export function RegisterForm({ initialType }: RegisterFormProps) {
@@ -31,20 +32,19 @@ export function RegisterForm({ initialType }: RegisterFormProps) {
 
       <Tabs value={role} onValueChange={(v) => setRole(v as typeof role)} className="w-full">
         <TabsList className="grid grid-cols-3 w-full mb-6">
-          <TabsTrigger value={USER_ROLES.STUDIO}>Studio</TabsTrigger>
-          <TabsTrigger value={USER_ROLES.ARTIST}>Artist</TabsTrigger>
-          <TabsTrigger value={USER_ROLES.CLIENT}>Client</TabsTrigger>
+          <TabsTrigger value={STUDIO_ROLE}>
+            <USER_ROLE_ICON.STUDIO className="size-3 mr-1" />
+            Studio
+          </TabsTrigger>
+          <TabsTrigger value={ARTIST_ROLE}>
+            <USER_ROLE_ICON.ARTIST className="size-3 mr-1" />
+            Artist
+          </TabsTrigger>
+          <TabsTrigger value={CLIENT_ROLE}>
+            <USER_ROLE_ICON.CLIENT className="size-3 mr-1" />
+            Client
+          </TabsTrigger>
         </TabsList>
-
-        {/* <TabsContent value={USER_ROLES.STUDIO}>
-          <div>Studio registration form goes here</div>
-        </TabsContent>
-        <TabsContent value={USER_ROLES.ARTIST}>
-          <div>Artist registration form goes here</div>
-        </TabsContent>
-        <TabsContent value={USER_ROLES.CLIENT}>
-          <div>Client registration form goes here</div>
-        </TabsContent> */}
       </Tabs>
 
       <form className="flex flex-col gap-4">
@@ -59,7 +59,7 @@ export function RegisterForm({ initialType }: RegisterFormProps) {
           className="w-full border p-2 rounded-md"
         />
         <Button type="submit" className="self-center">
-          Sign Up as {role.charAt(0).toUpperCase() + role.slice(1)}
+          Sign Up as {role.charAt(0).toUpperCase() + role.slice(1).toLowerCase()}
         </Button>
       </form>
 

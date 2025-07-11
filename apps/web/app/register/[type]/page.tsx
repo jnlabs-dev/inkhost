@@ -1,9 +1,10 @@
 import { Shell } from "@/components/layout/Shell"
 import { RegisterForm } from "@/components/Register/RegisterForm"
-import { UserRole, USER_ROLES } from "@/constants/roles"
+import { Role } from '@/types/globals'
+import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE } from '@/constants/roles'
 
 type PageParams = {
-  type: UserRole;
+  type: Role;
 }
 
 export default async function RegisterPage({ params }: { params: Promise<PageParams> }) {
@@ -22,8 +23,8 @@ export async function generateMetadata({ params }: { params: Promise<PageParams>
 
 export function generateStaticParams() {
   return [
-    { type: USER_ROLES.ARTIST },
-    { type: USER_ROLES.STUDIO },
-    { type: USER_ROLES.CLIENT },
+    { type: STUDIO_ROLE },
+    { type: ARTIST_ROLE },
+    { type: CLIENT_ROLE },
   ]
 }

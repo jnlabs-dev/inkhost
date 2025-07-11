@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import Link from "next/link";
-import { USER_ROLES } from "@/constants/roles"
+
+import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE } from '@/constants/roles'
 
 type FlowCardProps = {
   imageSrc: string;
@@ -40,7 +41,7 @@ export function FlowOverviewSection() {
     <section className="w-full px-4 py-2">
       <div className="max-w-5xl mx-auto flex flex-col items-center md:flex-row md:items-center md:justify-between">
 
-        <Link href={`/register/${USER_ROLES.STUDIO}`}>
+        <Link href={`/register/${STUDIO_ROLE}`}>
           <FlowCard
             imageSrc='/illustrations/tattoo-studio-illustration.png'
             label="Studio"
@@ -51,7 +52,7 @@ export function FlowOverviewSection() {
 
         <FlowArrows />
 
-        <Link href={`/register/${USER_ROLES.ARTIST}`}>
+        <Link href={`/register/${ARTIST_ROLE}`}>
           <FlowCard
             imageSrc='/illustrations/tattoo-artist.png'
             label="Artist"
@@ -62,7 +63,7 @@ export function FlowOverviewSection() {
 
         <FlowArrows />
 
-        <Link href={`/register/${USER_ROLES.CLIENT}`}>
+        <Link href={`/register/${CLIENT_ROLE}`}>
           <FlowCard
             imageSrc='/illustrations/tattoo-client.png'
             label="Client"
