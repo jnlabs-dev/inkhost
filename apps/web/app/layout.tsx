@@ -24,8 +24,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+    console.log("🚀 ~ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:", process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
           {children}

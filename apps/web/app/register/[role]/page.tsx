@@ -4,27 +4,27 @@ import { Role } from '@/types/globals'
 import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE } from '@/constants/roles'
 
 type PageParams = {
-  type: Role;
+  role: Role;
 }
 
 export default async function RegisterPage({ params }: { params: Promise<PageParams> }) {
   const resolvedParams = await params;
   return <Shell>
-    <RegisterForm initialType={resolvedParams.type} />
+    <RegisterForm initialRole={resolvedParams.role} />
   </Shell>
 }
 
 export async function generateMetadata({ params }: { params: Promise<PageParams> }) {
   const resolvedParams = await params;
   return {
-    title: `Register as ${resolvedParams.type}`,
+    title: `Register as ${resolvedParams.role}`,
   }
 }
 
 export function generateStaticParams() {
   return [
-    { type: STUDIO_ROLE },
-    { type: ARTIST_ROLE },
-    { type: CLIENT_ROLE },
+    { role: STUDIO_ROLE },
+    { role: ARTIST_ROLE },
+    { role: CLIENT_ROLE },
   ]
 }
