@@ -8,7 +8,7 @@ import { ARTIST_ROLE } from "@/constants/roles"
 import { CircleUserRound } from "lucide-react"
 
 export function Navigation() {
-  const { isSignedIn, user } = useUser();
+  const { isSignedIn, user, isLoaded } = useUser();
   const pathname = usePathname()
   const isOnRegisterPage = pathname?.startsWith("/register");
   const isOnLoginPage = pathname?.startsWith("/login");
@@ -18,7 +18,7 @@ export function Navigation() {
       <Link href="/" className="text-xl font-bold">
         InkHost
       </Link>
-      <div className="flex items-center gap-4">
+      {isLoaded ? <div className="flex items-center gap-4">
         {isOnLandingPage ? (<Link href="/studios" className="text-sm font-medium hover:underline">
           Explore Studios
         </Link>) : null}
@@ -35,7 +35,7 @@ export function Navigation() {
           </div>
         ) : null}
 
-      </div>
+      </div> : null}
     </nav>
   );
 }
