@@ -17,11 +17,14 @@ type RegisterFormProps = {
   initialRole: Role
 }
 
+type PendingAction = 'submitWithEmail' | 'submitWithGoogle' | 'submitWithFacebook' | 'emailVerification' | null;
+
 export function RegisterForm({ initialRole }: RegisterFormProps) {
   const router = useRouter()
+  const [currentPendingAction, setCurrentPendingAction] = useState<PendingAction>(null);
   const [isVerificationPending, setIsVerificationPending] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
-  const { isLoaded, signUp } = useSignUp();
+  const { isLoaded, signUp, setActive } = useSignUp();
 
   const {
     register,
@@ -53,6 +56,7 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
     console.log('Form data:', data)
     if (!isLoaded) return;
     try {
+      setCurrentPendingAction('submitWithEmail');
       await signUp.create({
         emailAddress: data.email,
         password: data.password,
@@ -60,8 +64,10 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
       });
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
       setIsVerificationPending(true);
+      setCurrentPendingAction(null);
     } catch (err) {
       console.error(err);
+      setCurrentPendingAction(null);
     }
   }
 
@@ -69,16 +75,18 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
     e.preventDefault();
     if (!isLoaded) return;
     try {
+      setCurrentPendingAction('emailVerification');
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verificationCode
       })
+      setCurrentPendingAction(null);
       if (completeSignUp.status === 'complete') {
-        console.log("🚀 ~ completeSignUp complete", completeSignUp);
-      } else {
-        console.log("🚀 ~ completeSignUp not complete", completeSignUp);
+        await setActive({ session: completeSignUp.createdSessionId });
+        router.push('/profile');
       }
     } catch (err) {
       console.error(err);
+      setCurrentPendingAction(null);
     }
   };
 
@@ -133,7 +141,7 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
 
             <div id="clerk-captcha" />
 
-            <Button type="submit" className="self-center mt-5">
+            <Button type="submit" className="self-center mt-5" loading={currentPendingAction === 'submitWithEmail'}>
               Sign Up as {role.charAt(0).toUpperCase() + role.slice(1)}
             </Button>
           </form>
@@ -141,10 +149,10 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
           <div className="text-center text-muted-foreground text-sm">or continue with</div>
 
           <div className="flex flex-col gap-2">
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" disabled={!!currentPendingAction}>
               Continue with Google
             </Button>
-            <Button variant="outline" className="w-full">
+            <Button variant="outline" className="w-full" disabled={!!currentPendingAction}>
               Continue with Facebook
             </Button>
           </div>
@@ -165,7 +173,12 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
               value={verificationCode}
               onChange={e => setVerificationCode(e.target.value)}
             />
-            <Button type="submit" disabled={!verificationCode} className="self-center mt-5">
+            <Button
+              type="submit"
+              disabled={!verificationCode || !!currentPendingAction}
+              className="self-center mt-5"
+              loading={currentPendingAction === 'emailVerification'}
+            >
               Verify Email
             </Button>
           </form>

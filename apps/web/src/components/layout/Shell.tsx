@@ -1,6 +1,6 @@
 
 import { ReactNode } from "react";
-import { Navigation } from "@/components/layout/Navigation";
+import { Navigation } from "@/components/navigation/Navigation";
 import { Separator } from "@/components/ui/base/Separator";
 import { cn } from "@/lib/utils";
 

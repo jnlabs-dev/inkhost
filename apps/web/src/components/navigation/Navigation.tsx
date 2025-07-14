@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useUser } from '@clerk/nextjs'
 import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/base/Button";
+import { UserMenu } from "@/components/navigation/UserMenu";
 import { ARTIST_ROLE } from "@/constants/roles"
-import { CircleUserRound } from "lucide-react"
 
 export function Navigation() {
   const { isSignedIn, user, isLoaded } = useUser();
@@ -28,13 +28,7 @@ export function Navigation() {
         {!isOnRegisterPage && !isSignedIn ? (<Link href={`/register/${ARTIST_ROLE}`}>
           <Button variant="secondary">Sign Up</Button>
         </Link>) : null}
-        {isSignedIn ? (
-          <div className="flex items-center gap-2">
-            <CircleUserRound className="size-6" />
-            {user.username || user.id}
-          </div>
-        ) : null}
-
+        <UserMenu />
       </div> : null}
     </nav>
   );
