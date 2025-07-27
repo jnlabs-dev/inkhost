@@ -21,9 +21,11 @@ export function UserMenu() {
         <DropdownMenuItem onClick={() => router.push("/profile")}>
           Profile
         </DropdownMenuItem>
-        <DropdownMenuItem>
-          <SignOutButton>Log out</SignOutButton>
-        </DropdownMenuItem>
+        <SignOutButton>
+          <DropdownMenuItem>
+            Log out
+          </DropdownMenuItem>
+        </SignOutButton>
       </DropdownMenuContent>
     </DropdownMenu>
   )

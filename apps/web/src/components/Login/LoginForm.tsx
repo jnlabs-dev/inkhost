@@ -81,7 +81,7 @@ export function LoginForm() {
       </form>
 
       <p className="text-center text-sm text-muted-foreground">
-        New here? <Link href="/login" className="underline">Create an account</Link>
+        New here? <Link href="/register" className="underline">Create an account</Link>
       </p>
     </div>
   )
