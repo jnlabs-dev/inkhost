@@ -23,7 +23,7 @@ export function Navigation() {
           Explore Studios
         </Link>) : null}
         {!isOnLoginPage && !isSignedIn ? (<Link href="/login">
-          <Button>Sign In</Button>
+          <Button>Login</Button>
         </Link>) : null}
         {!isOnRegisterPage && !isSignedIn ? (<Link href={`/register`}>
           <Button variant="secondary">Sign Up</Button>

@@ -3,10 +3,11 @@
 import { FormEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSignUp, useClerk } from '@clerk/nextjs'
+import { useSignUp } from '@clerk/nextjs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/base/Tabs'
 import { useToast } from "@/components/providers/ToastProvider"
 import { Button } from '@/components/ui/base/Button'
+import { PasswordInput } from '@/components/ui/PasswordInput/PasswordInput'
 import { Role } from '@/types/globals'
 import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from '@/constants/roles'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -23,7 +24,6 @@ export function RegisterForm() {
   const [isVerificationPending, setIsVerificationPending] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const { isLoaded, signUp, setActive } = useSignUp();
-  const { client } = useClerk();
   const { showToast } = useToast();
 
   const {
@@ -37,6 +37,7 @@ export function RegisterForm() {
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
       role: (searchParams.get("role") as Role) || 'artist',
+      username: '',
       email: '',
       password: ''
     },
@@ -142,11 +143,11 @@ export function RegisterForm() {
             />
             {errors.username && <p className="text-red-700 text-sm mt-1">{errors.username.message}</p>}
 
-            <input
+            <PasswordInput
               {...register('password')}
               type="password"
               placeholder="Password"
-              className="w-full border p-2 rounded-md mt-4"
+              containerClassName="mt-4"
             />
             {errors.password && <p className="text-red-700 text-sm mt-1">{errors.password.message}</p>}
 
