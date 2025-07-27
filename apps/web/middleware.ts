@@ -11,6 +11,11 @@ const isPublicRoute = createRouteMatcher([
 const isAdminRoute = createRouteMatcher(["/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
+  // Skip all /api/* routes
+  if (req.nextUrl.pathname.startsWith('/api')) {
+    return NextResponse.next();
+  }
+
   const { userId, sessionClaims } = await auth();
 
   // If the user isn't signed in and the route is private, redirect to sign-in

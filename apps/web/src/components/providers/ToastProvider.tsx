@@ -10,14 +10,14 @@ import {
 } from "@/components/ui/base/Toast"
 import { createContext, useCallback, useContext, useRef, useState } from "react"
 
-type ToastType = {
+type ToastParamsType = {
   title: string
   description?: string
-  variant?: "default" | "destructive"
+  variant?: "default" | "error" | "success"
 }
 
 type ToastContextValue = {
-  showToast: (toast: ToastType) => void
+  showToast: (toast: ToastParamsType) => void
 }
 
 const ToastContext = createContext<ToastContextValue | undefined>(undefined)
@@ -30,10 +30,10 @@ export const useToast = () => {
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
-  const [currentToast, setCurrentToast] = useState<ToastType | null>(null)
+  const [currentToast, setCurrentToast] = useState<ToastParamsType | null>(null)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
 
-  const showToast = useCallback((toast: ToastType) => {
+  const showToast = useCallback((toast: ToastParamsType) => {
     setCurrentToast(toast)
     setOpen(true)
 
@@ -51,9 +51,9 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {children}
         <Toast open={open} onOpenChange={setOpen} variant={currentToast?.variant}>
           <ToastTitle>{currentToast?.title}</ToastTitle>
-          {currentToast?.description && (
+          {currentToast?.description ? (
             <ToastDescription>{currentToast.description}</ToastDescription>
-          )}
+          ) : null}
           <ToastClose />
         </Toast>
         <ToastViewport />

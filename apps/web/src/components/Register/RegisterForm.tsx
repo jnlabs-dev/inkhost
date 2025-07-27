@@ -1,9 +1,9 @@
 'use client'
 
-import { FormEventHandler, useEffect, useState } from 'react'
+import { FormEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSignUp } from '@clerk/nextjs'
+import { useSignUp, useClerk } from '@clerk/nextjs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/base/Tabs'
 import { useToast } from "@/components/providers/ToastProvider"
 import { Button } from '@/components/ui/base/Button'
@@ -23,6 +23,7 @@ export function RegisterForm() {
   const [isVerificationPending, setIsVerificationPending] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { client } = useClerk();
   const { showToast } = useToast();
 
   const {
@@ -31,6 +32,7 @@ export function RegisterForm() {
     formState: { errors },
     watch,
     setValue,
+    getValues
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
@@ -60,11 +62,12 @@ export function RegisterForm() {
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
       setIsVerificationPending(true);
       setCurrentPendingAction(null);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
       showToast({
-        variant: 'destructive',
-        title: 'Something went wrong'
+        variant: 'error',
+        title: 'Failed to create account',
+        description: err?.message || 'Something went wrong. Please try again or contact support'
       });
       setCurrentPendingAction(null);
     }
@@ -80,11 +83,22 @@ export function RegisterForm() {
       })
       setCurrentPendingAction(null);
       if (completeSignUp.status === 'complete') {
+        const selectedRole = getValues('role');
         await setActive({ session: completeSignUp.createdSessionId });
+        await fetch("/api/user/metadata", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ role: selectedRole }),
+        });
         router.push('/profile');
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      showToast({
+        variant: 'error',
+        title: 'Failed to verify email address',
+        description: err?.message || 'Something went wrong. Please try again or contact support'
+      });
       setCurrentPendingAction(null);
     }
   };
