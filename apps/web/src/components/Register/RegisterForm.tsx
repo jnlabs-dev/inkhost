@@ -5,26 +5,25 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSignUp } from '@clerk/nextjs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/base/Tabs'
+import { useToast } from "@/components/providers/ToastProvider"
 import { Button } from '@/components/ui/base/Button'
 import { Role } from '@/types/globals'
 import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from '@/constants/roles'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { PasswordStrengthBar } from '@/components/Register/PasswordStrengthBar'
 import { RegisterFormValues, registerFormSchema } from '@/lib/validation/registerFormSchema'
 
-type RegisterFormProps = {
-  initialRole: Role
-}
-
 type PendingAction = 'submitWithEmail' | 'submitWithGoogle' | 'submitWithFacebook' | 'emailVerification' | null;
 
-export function RegisterForm({ initialRole }: RegisterFormProps) {
+export function RegisterForm() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [currentPendingAction, setCurrentPendingAction] = useState<PendingAction>(null);
   const [isVerificationPending, setIsVerificationPending] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
   const { isLoaded, signUp, setActive } = useSignUp();
+  const { showToast } = useToast();
 
   const {
     register,
@@ -35,7 +34,7 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      role: initialRole,
+      role: (searchParams.get("role") as Role) || 'artist',
       email: '',
       password: ''
     },
@@ -44,16 +43,12 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
   const role = watch('role')
   const password = watch('password')
 
-  useEffect(() => {
-    setValue('role', initialRole)
-  }, [initialRole, setValue])
-
   const onRoleChange = (roleValue: string) => {
+    router.replace(`/register?role=${roleValue}`)
     setValue('role', roleValue as Role);
   };
 
   const onSubmit = async (data: RegisterFormValues) => {
-    console.log('Form data:', data)
     if (!isLoaded) return;
     try {
       setCurrentPendingAction('submitWithEmail');
@@ -67,6 +62,10 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
       setCurrentPendingAction(null);
     } catch (err) {
       console.error(err);
+      showToast({
+        variant: 'destructive',
+        title: 'Something went wrong'
+      });
       setCurrentPendingAction(null);
     }
   }
@@ -112,7 +111,7 @@ export function RegisterForm({ initialRole }: RegisterFormProps) {
             </TabsList>
           </Tabs>
 
-          <form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
+          <form noValidate className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
             <input
               {...register('email')}
               type="email"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { ClerkProvider } from '@clerk/nextjs'
+import { ToastProvider } from "@/components/providers/ToastProvider"
 
 import "./globals.css";
 import 'leaflet/dist/leaflet.css';
@@ -26,11 +27,13 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
-          {children}
-        </body>
-      </html>
+      <ToastProvider>
+        <html lang="en">
+          <body className={`${geistSans.variable} ${geistMono.variable} font-sans`}>
+            {children}
+          </body>
+        </html>
+      </ToastProvider>
     </ClerkProvider>
   );
 }

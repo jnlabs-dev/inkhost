@@ -15,19 +15,19 @@ export function GetStartedSection() {
           Sign up today to discover, host, or get tattooed — wherever you are.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-4">
-          <Link href={`/register/${STUDIO_ROLE}`}>
+          <Link href={`/register?role=${STUDIO_ROLE}`}>
             <Button size="lg" variant="default">
               <USER_ROLE_ICON.studio className="size-4" />
               I’m a Studio
             </Button>
           </Link>
-          <Link href={`/register/${ARTIST_ROLE}`}>
+          <Link href={`/register?role=${ARTIST_ROLE}`}>
             <Button size="lg" variant="default">
               <USER_ROLE_ICON.artist className="size-4" />
               I’m an Artist
             </Button>
           </Link>
-          <Link href={`/register/${CLIENT_ROLE}`}>
+          <Link href={`/register?role=${CLIENT_ROLE}`}>
             <Button size="lg" variant="default">
               <USER_ROLE_ICON.client className="size-4" />
               I’m a Client

@@ -25,7 +25,7 @@ export function Navigation() {
         {!isOnLoginPage && !isSignedIn ? (<Link href="/login">
           <Button>Sign In</Button>
         </Link>) : null}
-        {!isOnRegisterPage && !isSignedIn ? (<Link href={`/register/${ARTIST_ROLE}`}>
+        {!isOnRegisterPage && !isSignedIn ? (<Link href={`/register`}>
           <Button variant="secondary">Sign Up</Button>
         </Link>) : null}
         <UserMenu />
