@@ -145,7 +145,6 @@ export function RegisterForm() {
 
             <PasswordInput
               {...register('password')}
-              type="password"
               placeholder="Password"
               containerClassName="mt-4"
             />
