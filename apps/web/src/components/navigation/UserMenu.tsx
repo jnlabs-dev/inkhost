@@ -1,32 +1,26 @@
 'use client'
 
-import { UserButton, useUser, SignOutButton } from "@clerk/nextjs"
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/base/DropdownMenu"
-import { useRouter } from "next/navigation"
+import { useUser, UserButton } from "@clerk/nextjs"
 
 export function UserMenu() {
   const { user } = useUser()
-  const router = useRouter()
 
-  if (!user) return null
+  if (!user) return null;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-2">
-          <UserButton afterSignOutUrl="/" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => router.push("/profile")}>
-          Profile
-        </DropdownMenuItem>
-        <SignOutButton>
-          <DropdownMenuItem>
-            Log out
-          </DropdownMenuItem>
-        </SignOutButton>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <UserButton
+      showName={true}
+      userProfileMode="navigation"
+      userProfileUrl="/profile"
+      appearance={{
+        elements: {
+          userButtonOuterIdentifier: 'text-sm',
+          userButtonPopoverCard: 'w-[280px]',
+          userButtonPopoverFooter: 'hidden',
+          userButtonPopoverActionButton: 'gap-2 text-sm text-gray-800',
+          userButtonPopoverActionButtonIconBox: 'basis-auto'
+        }
+      }}
+    />
   )
 }
