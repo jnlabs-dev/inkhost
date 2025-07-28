@@ -38,6 +38,8 @@ export function RegisterForm() {
     defaultValues: {
       role: (searchParams.get("role") as Role) || 'artist',
       username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: ''
     },
@@ -59,6 +61,8 @@ export function RegisterForm() {
         emailAddress: data.email,
         password: data.password,
         username: data.username,
+        firstName: data.firstName,
+        lastName: data.lastName
       });
       await signUp.prepareEmailAddressVerification({ strategy: 'email_code' });
       setIsVerificationPending(true);
@@ -134,6 +138,26 @@ export function RegisterForm() {
               className="w-full border p-2 rounded-md"
             />
             {errors.email && <p className="text-red-700 text-sm">{errors.email.message}</p>}
+
+            <div className='flex mt-4 gap-2'>
+              <div className="flex-1">
+                <input
+                  {...register('firstName')}
+                  placeholder="First name (optional)"
+                  className="w-full border p-2 rounded-md"
+                />
+                {errors.firstName && <p className="text-red-700 text-sm">{errors.firstName.message}</p>}
+              </div>
+
+              <div className="flex-1">
+                <input
+                  {...register('lastName')}
+                  placeholder="Last name (optional)"
+                  className="w-full border p-2 rounded-md"
+                />
+                {errors.lastName && <p className="text-red-700 text-sm">{errors.lastName.message}</p>}
+              </div>
+            </div>
 
             <input
               {...register('username')}

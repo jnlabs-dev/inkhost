@@ -5,6 +5,8 @@ import { getPasswordStrengthLevel } from '@/lib/validation/passwordStrength';
 export const registerFormSchema = z.object({
   role: z.enum([STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE]),
   email: z.email("Invalid email address"),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
   password: z
     .string()
     .min(1, "Password is required")
