@@ -25,7 +25,6 @@ export function RegisterSSOCallbackForm() {
     formState: { errors },
     watch,
     setValue,
-    getValues
   } = useForm<RegisterSSOCallbackFormValues>({
     resolver: zodResolver(registerSSOCallbackFormSchema),
     defaultValues: {
@@ -48,7 +47,6 @@ export function RegisterSSOCallbackForm() {
         username: data.username,
       });
       await signUp.reload();
-      console.log("🚀 ~ onSubmit ~ status:", signUp.status);
       if (signUp.status === 'complete') {
         await setActive({ session: signUp.createdSessionId })
         await fetch("/api/user/metadata", {
@@ -72,9 +70,6 @@ export function RegisterSSOCallbackForm() {
 
   return (
     <div className="w-full max-w-xl mx-auto p-10 space-y-8">
-      <p className="text-center text-muted-foreground text-sm mt-1">
-        Choose your role and join InkHost today.
-      </p>
       <Tabs value={role} onValueChange={onRoleChange} className="w-full">
         <TabsList className="grid grid-cols-3 w-full mb-6">
           <TabsTrigger value={STUDIO_ROLE}>

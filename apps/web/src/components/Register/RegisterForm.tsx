@@ -9,13 +9,12 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/base/Tabs'
 import { useToast } from "@/components/providers/ToastProvider"
 import { Button } from '@/components/ui/base/Button'
 import { PasswordInput } from '@/components/ui/PasswordInput/PasswordInput'
-import { GoogleIcon } from '@/components/icons/GoogleIcon'
-import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { Role } from '@/types/globals'
 import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from '@/constants/roles'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { PasswordStrengthBar } from '@/components/Register/PasswordStrengthBar'
+import { SSOButtonsGroup } from '@/components/ui/SSOButtonsGroup/SSOButtonsGroup'
 import { RegisterFormValues, registerFormSchema } from '@/lib/validation/registerFormSchema'
 
 type PendingAction = 'submitWithEmail' | 'submitWithGoogle' | 'submitWithFacebook' | 'emailVerification' | null;
@@ -117,7 +116,7 @@ export function RegisterForm() {
     return signUp
       .authenticateWithRedirect({
         strategy,
-        redirectUrl: `/register/sso-callback?role=${role}`,
+        redirectUrl: `/sso-callback?role=${role}`,
         redirectUrlComplete: '/profile',
       })
       .then((res) => {
@@ -213,30 +212,14 @@ export function RegisterForm() {
 
           <div className="text-center text-muted-foreground text-sm">or continue with</div>
 
-          <div className="flex gap-2 justify-center">
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-[180px]"
-              disabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithGoogle')}
-              loading={currentPendingAction === 'submitWithGoogle'}
-              onClick={() => signUpWith('oauth_google')}
-            >
-              <GoogleIcon className='size-6' />
-              Google
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="w-[180px]"
-              disabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithFacebook')}
-              loading={currentPendingAction === 'submitWithFacebook'}
-              onClick={() => signUpWith('oauth_facebook')}
-            >
-              <FacebookIcon className='size-6' />
-              Facebook
-            </Button>
-          </div>
+          <SSOButtonsGroup
+            googleDisabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithGoogle')}
+            googlePending={currentPendingAction === 'submitWithGoogle'}
+            onGoogleClicked={() => signUpWith('oauth_google')}
+            facebookDisabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithFacebook')}
+            facebookPending={currentPendingAction === 'submitWithFacebook'}
+            onFacebookClicked={() => signUpWith('oauth_facebook')}
+          />
 
           <p className="text-center text-sm text-muted-foreground">
             Already have an account? <Link href="/login" className="underline">Sign in</Link>

@@ -4,20 +4,23 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSignIn } from '@clerk/nextjs'
+import { OAuthStrategy } from '@clerk/types'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/base/Button'
-import { GoogleIcon } from '@/components/icons/GoogleIcon'
-import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { PasswordInput } from '@/components/ui/PasswordInput/PasswordInput'
+import { SSOButtonsGroup } from '@/components/ui/SSOButtonsGroup/SSOButtonsGroup'
 import { useToast } from "@/components/providers/ToastProvider"
 import Link from 'next/link'
 import { LoginFormValues, loginFormSchema } from '@/lib/validation/loginFormSchema'
+
+type PendingAction = 'submitWithEmail' | 'submitWithGoogle' | 'submitWithFacebook' | null;
 
 export function LoginForm() {
   const router = useRouter()
   const { showToast } = useToast();
   const { isLoaded, signIn, setActive } = useSignIn();
-  const [isActionPending, setIsActionPending] = useState(false);
+  console.log("🚀 ~ LoginForm ~ signIn:", signIn?.status)
+  const [currentPendingAction, setCurrentPendingAction] = useState<PendingAction>(null);
 
   const {
     register,
@@ -35,18 +38,18 @@ export function LoginForm() {
   const onSubmit = async (data: LoginFormValues) => {
     if (!isLoaded) return;
     try {
-      setIsActionPending(true);
+      setCurrentPendingAction('submitWithEmail');
       const signInAttempt = await signIn.create({
         identifier: data.identifier,
         password: data.password,
       })
       if (signInAttempt.status === 'complete') {
         await setActive({ session: signInAttempt.createdSessionId });
-        setIsActionPending(false);
+        setCurrentPendingAction(null);
         router.push('/profile')
       }
     } catch (err: any) {
-      setIsActionPending(false);
+      setCurrentPendingAction(null);
       console.error(err);
       showToast({
         variant: 'error',
@@ -54,6 +57,31 @@ export function LoginForm() {
         description: err?.message || 'Something went wrong. Please try again or contact support'
       });
     }
+  }
+
+  const loginWith = (strategy: OAuthStrategy) => {
+    if (!isLoaded) return;
+    setCurrentPendingAction(strategy === 'oauth_facebook' ? 'submitWithFacebook' : 'submitWithGoogle')
+    return signIn
+      .authenticateWithRedirect({
+        strategy,
+        redirectUrl: `/login`,
+        redirectUrlComplete: '/profile',
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err: any) => {
+        console.error(err);
+        showToast({
+          variant: 'error',
+          title: 'Failed to create account',
+          description: err?.message || 'Something went wrong. Please try again or contact support'
+        });
+      })
+      .finally(() => {
+        setCurrentPendingAction(null)
+      })
   }
 
   return (
@@ -77,23 +105,25 @@ export function LoginForm() {
 
         <div id="clerk-captcha" />
 
-        <Button type="submit" className="self-center mt-5 w-[120px]" loading={isActionPending}>
+        <Button
+          type="submit"
+          className="self-center mt-5 w-[120px]"
+          loading={currentPendingAction === 'submitWithEmail'}
+        >
           Login
         </Button>
       </form>
 
       <div className="text-center text-muted-foreground text-sm">or continue with</div>
 
-      <div className="flex gap-2 justify-center">
-        <Button size="lg" variant="outline" className="w-[180px]" disabled={!!isActionPending}>
-          <GoogleIcon className='size-6' />
-          Google
-        </Button>
-        <Button size="lg" variant="outline" className="w-[180px]" disabled={!!isActionPending}>
-          <FacebookIcon className='size-6' />
-          Facebook
-        </Button>
-      </div>
+      <SSOButtonsGroup
+        googleDisabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithGoogle')}
+        googlePending={currentPendingAction === 'submitWithGoogle'}
+        onGoogleClicked={() => loginWith('oauth_google')}
+        facebookDisabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithFacebook')}
+        facebookPending={currentPendingAction === 'submitWithFacebook'}
+        onFacebookClicked={() => loginWith('oauth_facebook')}
+      />
 
       <p className="text-center text-sm text-muted-foreground">
         New here? <Link href="/register" className="underline">Create an account</Link>

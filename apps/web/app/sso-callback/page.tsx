@@ -20,7 +20,7 @@ export default function RegisterSSOCallbackHandler() {
       }
     }
     handleCallback()
-  }, [])
+  }, [signUp?.status, signUp?.createdSessionId, router, setActive])
 
   if (signUp?.status === 'missing_requirements') {
     return (

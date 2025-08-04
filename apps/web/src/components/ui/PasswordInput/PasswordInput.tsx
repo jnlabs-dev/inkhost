@@ -16,7 +16,7 @@ export function PasswordInput({ containerClassName, className, ...inputProps }: 
       <input
         type={showPassword ? 'text' : 'password'}
         {...inputProps}
-        className={cn("w-full border p-2 rounded-md")}
+        className={cn("w-full border p-2 rounded-md", className)}
       />
       <button
         type="button"
