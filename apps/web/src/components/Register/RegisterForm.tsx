@@ -3,11 +3,14 @@
 import { FormEventHandler, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { OAuthStrategy } from '@clerk/types'
 import { useSignUp } from '@clerk/nextjs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/base/Tabs'
 import { useToast } from "@/components/providers/ToastProvider"
 import { Button } from '@/components/ui/base/Button'
 import { PasswordInput } from '@/components/ui/PasswordInput/PasswordInput'
+import { GoogleIcon } from '@/components/icons/GoogleIcon'
+import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { Role } from '@/types/globals'
 import { STUDIO_ROLE, ARTIST_ROLE, CLIENT_ROLE, USER_ROLE_ICON } from '@/constants/roles'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -108,6 +111,31 @@ export function RegisterForm() {
     }
   };
 
+  const signUpWith = (strategy: OAuthStrategy) => {
+    if (!isLoaded) return;
+    setCurrentPendingAction(strategy === 'oauth_facebook' ? 'submitWithFacebook' : 'submitWithGoogle')
+    return signUp
+      .authenticateWithRedirect({
+        strategy,
+        redirectUrl: `/register/sso-callback?role=${role}`,
+        redirectUrlComplete: '/profile',
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err: any) => {
+        console.error(err);
+        showToast({
+          variant: 'error',
+          title: 'Failed to create account',
+          description: err?.message || 'Something went wrong. Please try again or contact support'
+        });
+      })
+      .finally(() => {
+        setCurrentPendingAction(null)
+      })
+  }
+
   return (
     <div className="w-full max-w-xl mx-auto p-10 space-y-8">
       <h1 className="text-center text-2xl font-bold">Create Your Account</h1>
@@ -139,6 +167,14 @@ export function RegisterForm() {
             />
             {errors.email && <p className="text-red-700 text-sm">{errors.email.message}</p>}
 
+            <input
+              {...register('username')}
+              type="text"
+              placeholder="Username"
+              className="w-full border p-2 rounded-md mt-4"
+            />
+            {errors.username && <p className="text-red-700 text-sm mt-1">{errors.username.message}</p>}
+
             <div className='flex mt-4 gap-2'>
               <div className="flex-1">
                 <input
@@ -159,14 +195,6 @@ export function RegisterForm() {
               </div>
             </div>
 
-            <input
-              {...register('username')}
-              type="text"
-              placeholder="Username"
-              className="w-full border p-2 rounded-md mt-4"
-            />
-            {errors.username && <p className="text-red-700 text-sm mt-1">{errors.username.message}</p>}
-
             <PasswordInput
               {...register('password')}
               placeholder="Password"
@@ -185,12 +213,28 @@ export function RegisterForm() {
 
           <div className="text-center text-muted-foreground text-sm">or continue with</div>
 
-          <div className="flex flex-col gap-2">
-            <Button variant="outline" className="w-full" disabled={!!currentPendingAction}>
-              Continue with Google
+          <div className="flex gap-2 justify-center">
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-[180px]"
+              disabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithGoogle')}
+              loading={currentPendingAction === 'submitWithGoogle'}
+              onClick={() => signUpWith('oauth_google')}
+            >
+              <GoogleIcon className='size-6' />
+              Google
             </Button>
-            <Button variant="outline" className="w-full" disabled={!!currentPendingAction}>
-              Continue with Facebook
+            <Button
+              size="lg"
+              variant="outline"
+              className="w-[180px]"
+              disabled={Boolean(currentPendingAction && currentPendingAction !== 'submitWithFacebook')}
+              loading={currentPendingAction === 'submitWithFacebook'}
+              onClick={() => signUpWith('oauth_facebook')}
+            >
+              <FacebookIcon className='size-6' />
+              Facebook
             </Button>
           </div>
 

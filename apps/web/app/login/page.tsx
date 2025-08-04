@@ -1,8 +1,7 @@
 import { Shell } from "@/components/layout/Shell"
 import { LoginForm } from "@/components/Login/LoginForm"
 
-
-export default async function RegisterPage() {
+export default async function LoginPage() {
   return <Shell>
     <LoginForm />
   </Shell>

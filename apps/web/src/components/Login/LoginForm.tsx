@@ -6,6 +6,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useSignIn } from '@clerk/nextjs'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/base/Button'
+import { GoogleIcon } from '@/components/icons/GoogleIcon'
+import { FacebookIcon } from '@/components/icons/FacebookIcon'
 import { PasswordInput } from '@/components/ui/PasswordInput/PasswordInput'
 import { useToast } from "@/components/providers/ToastProvider"
 import Link from 'next/link'
@@ -79,6 +81,19 @@ export function LoginForm() {
           Login
         </Button>
       </form>
+
+      <div className="text-center text-muted-foreground text-sm">or continue with</div>
+
+      <div className="flex gap-2 justify-center">
+        <Button size="lg" variant="outline" className="w-[180px]" disabled={!!isActionPending}>
+          <GoogleIcon className='size-6' />
+          Google
+        </Button>
+        <Button size="lg" variant="outline" className="w-[180px]" disabled={!!isActionPending}>
+          <FacebookIcon className='size-6' />
+          Facebook
+        </Button>
+      </div>
 
       <p className="text-center text-sm text-muted-foreground">
         New here? <Link href="/register" className="underline">Create an account</Link>

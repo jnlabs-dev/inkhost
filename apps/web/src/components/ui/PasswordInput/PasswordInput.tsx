@@ -23,9 +23,9 @@ export function PasswordInput({ containerClassName, className, ...inputProps }: 
         onClick={() => setShowPassword((prev) => !prev)}
         className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
         tabIndex={-1}
-        title={!showPassword ? "Show password" : "Hide Password"}
+        title={showPassword ? "Show password" : "Hide Password"}
       >
-        {!showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
+        {showPassword ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
       </button>
     </div>
   )
